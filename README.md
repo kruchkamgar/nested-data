@@ -3,7 +3,7 @@
 # create a n-deep data structure from simple associations; render recursively with a partial
 
 * System dependencies
-  csv gem
+  - csv gem
 
 * Database initialization
   - seed from CSV
