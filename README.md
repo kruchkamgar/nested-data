@@ -6,8 +6,8 @@
   csv gem
 
 * Database initialization
-  seed from CSV
+  - seed from CSV
 
 * Services (job queues, cache servers, search engines, etc.)
-  creates nested_hash, in preparation for render
+  - creates nested_hash, in preparation for render
 
