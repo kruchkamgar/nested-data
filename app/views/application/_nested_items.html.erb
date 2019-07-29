@@ -1,0 +1,8 @@
+
+<ul>
+<% hashes.each do |hash| %>
+  <li> <%=hash.value["name"]%> </li>
+    <%# recursively render %>
+    <%= render(partial: "nested_items", locals: {hashes: hash.value[:sub_items]} ) if hash.value[:sub_items] %>
+<% end %>
+</ul>
