@@ -1,5 +1,3 @@
-# README
-
 # create a n-deep data structure from simple associations; render recursively with a partial
 
 * System dependencies
