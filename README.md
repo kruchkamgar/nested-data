@@ -10,3 +10,5 @@
   - creates nested_hash, in preparation for render
   - uses an object class called Pointer, to keep an index of [nested] data items for data-structure mutation purposes
 
+* Template
+  - render nested structure in HTML unordered lists: <ul> <li> <ul> ...
