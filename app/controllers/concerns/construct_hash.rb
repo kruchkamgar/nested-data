@@ -38,7 +38,7 @@ module ConstructHash
   end
 
 
-# /////////////  untested alternatives  ///////////// #
+# /////////////  UNTESTED alternative  ///////////// #
 
   # data structure:
   # [
@@ -49,41 +49,11 @@ module ConstructHash
 
   # /////////////// #
 
-  # recursively find parent
-  def find_nested_parent(child, array)
 
-    array
-    .each do |d|
-      if child["subItemOf_ID"] == d["id"]
-        then return d end
-
-      if d[:sub_items]
-        find_nested_parent(child, d[:sub_items]) end
-    end
-
-    # tail call in ruby?
-      # - pass along the trailing arrays and resume calling find_nested_parent, in order (?)
-  end
-
-  def nested_data_traverse(data)
-    data_list = data.clone
-
-    data_list
-    .each_with_index do |d, i|
-      parent = find_nested_parent(d, data_list)
-      if parent[:sub_items]
-        parent[:sub_items] << d
-      else
-        parent = Hash[ item: parent, sub_items: [child] ] end
-
-      data_list.delete_at(i)
-    end
-
-  end
 
 # /////////////////////////////////////////////////// #
 
-  # this precludes need to 'find_nested_parent', by working from bottom-of-the-tree, up;
+  # this approach precludes need to 'find_nested_parent', by working from bottom-of-the-tree, up;
   # places all parents behind children
   def sort_parent_behind_child(data)
     data_list = data.clone
@@ -92,8 +62,6 @@ module ConstructHash
       child_index =
       data_list.index do |child|
         child["subItemOf_ID"] == d["id"] end
-
-      # if parent_index then puts data_list[parent_index]["id"] end
 
       if child_index &&
          child_index < d["id"]
@@ -110,15 +78,15 @@ module ConstructHash
 
     data_list = data.clone
     data_list
-    .each do |array|
+    .each do |item|
       index =
       data_list
-      .index do |row|
-        row[0] == array[2] # id == subItemOf_ID
+      .index do |d|
+        item["subItemOf_ID"] == d["id"] # id == subItemOf_ID
       end
 
       data_list[index] =
-      Hash[ item: data_list[index], sub_items: [array] ]
+      Hash[ item: data_list[index], sub_items: [item] ]
     end
 
   end
