@@ -1,24 +1,14 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
+# create a n-deep data structure from simple associations; render recursively with a partial
 
 * System dependencies
-
-* Configuration
-
-* Database creation
+  - csv gem
 
 * Database initialization
-
-* How to run the test suite
+  - seed from CSV
 
 * Services (job queues, cache servers, search engines, etc.)
+  - creates nested_hash, in preparation for render
+  - uses an object class called Pointer, to keep an index of [nested] data items for data-structure mutation purposes
 
-* Deployment instructions
-
-* ...
+* Template
+  - render nested structure in HTML unordered lists: \<ul\> \<li\> \<ul\> ...
