@@ -14,6 +14,7 @@ include ConstructHash
       @items << item end
 
     @nested_hash = nested_hash(@items)
+    byebug
   end
 
 end
