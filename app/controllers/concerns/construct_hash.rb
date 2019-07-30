@@ -38,44 +38,79 @@ module ConstructHash
   end
 
 
+# /////////////  untested alternatives  ///////////// #
+
+  # data structure:
   # [
   #   {elem: []},
   #   elem,
   #   elem
   # ]
 
-  def sort_parent_ahead_of_child(data)
+  # /////////////// #
 
+  # recursively find parent
+  def find_nested_parent(child, array)
+
+    array
+    .each do |d|
+      if child["subItemOf_ID"] == d["id"]
+        then return d end
+
+      if d[:sub_items]
+        find_nested_parent(child, d[:sub_items]) end
+    end
+
+    # tail call in ruby?
+      # - pass along the trailing arrays and resume calling find_nested_parent, in order (?)
+  end
+
+  def nested_data_traverse(data)
     data_list = data.clone
 
-    data.each_with_index do |d, index|
-      parent_index =
-      data.index do |item|
-        item["id"] == d["subItemOf_ID"] end
+    data_list
+    .each_with_index do |d, i|
+      parent = find_nested_parent(d, data_list)
+      if parent[:sub_items]
+        parent[:sub_items] << d
+      else
+        parent = Hash[ item: parent, sub_items: [child] ] end
 
-      # if parent_index then puts data[parent_index]["id"] end
+      data_list.delete_at(i)
+    end
 
-      if parent_index &&
-         parent_index > d["subItemOf_ID"]
+  end
+
+# /////////////////////////////////////////////////// #
+
+  # this precludes need to 'find_nested_parent', by working from bottom-of-the-tree, up;
+  # places all parents behind children
+  def sort_parent_behind_child(data)
+    data_list = data.clone
+
+    data_list.each_with_index do |d, parent_index|
+      child_index =
+      data_list.index do |child|
+        child["subItemOf_ID"] == d["id"] end
+
+      # if parent_index then puts data_list[parent_index]["id"] end
+
+      if child_index &&
+         child_index < d["id"]
       then
-        data_list.delete_at(index)
-        data_list.insert(parent_index+1, d) end
+        data_list.delete_at(parent_index)
+        data_list.insert(child_index+1, d) end
     end
 
     return data_list
   end
 
-
-  # multi-dimensional
   def nested_hash_simple(data)
     # if sub_item comes before parent item in array
 
     data_list = data.clone
-    nested_hash = []
     data_list
     .each do |array|
-      nested_hash[]
-
       index =
       data_list
       .index do |row|
@@ -83,24 +118,12 @@ module ConstructHash
       end
 
       data_list[index] =
-      Hash[ item: data_list[index], sub_items: [array[2]] ]
-
-
+      Hash[ item: data_list[index], sub_items: [array] ]
     end
 
   end
 
-
-
 end
-
-# index = nil
-#
-# data_list
-# .find.with_index do |row, i|
-#   index = i
-#   row[0] == array[2] # id == subItemOf_ID
-# end
 
 
 # *1— separate references may point to same object instance (same object_id). Thus preventing balooning performance issues via potentially exponential copying of :sub_items.
