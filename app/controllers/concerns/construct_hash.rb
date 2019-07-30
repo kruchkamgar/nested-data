@@ -12,12 +12,12 @@ module ConstructHash
     nested_data =
     data
     .map do |d|
-      Pointer.new(value: d.attributes) end
+      d.attributes end
 
     groups =
     nested_data
     .group_by do |d|
-      d.value["subItemOf_ID"] end
+      d["subItemOf_ID"] end
     groups
     .reject do |group|
       group == 0 end
@@ -25,16 +25,15 @@ module ConstructHash
       # find parent', and assign group to its :sub_items. *1
       nested_data
       .find do |d|
-        d.value["id"] == group[0] end
-      .value[:sub_items] =
+        d["id"] == group[0] end[:sub_items] =
       group.second
       .sort! do |a,b|
-        a.value["name"] <=> b.value["name"] end
+        a["name"] <=> b["name"] end
     end
 
     return groups[0]
       .sort! do |a,b|
-        a.value["name"] <=> b.value["name"] end
+        a["name"] <=> b["name"] end
   end
 
 

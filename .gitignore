@@ -27,7 +27,8 @@
 /public/assets
 .byebug_history
 
-/app/controllers/concerns/construct_hash_nested_hash_edit.rb
+/app/controllers/concerns/construct_hash_nested_edit.rb
+/app/controllers/concerns/scratch.rb
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key

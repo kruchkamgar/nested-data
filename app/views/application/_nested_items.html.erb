@@ -1,8 +1,8 @@
 
 <ul>
 <% hashes.each do |hash| %>
-  <li> <%=hash.value["name"]%> </li>
+  <li> <%=hash["name"]%> </li>
     <%# recursively render %>
-    <%= render(partial: "nested_items", locals: {hashes: hash.value[:sub_items]} ) if hash.value[:sub_items] %>
+    <%= render(partial: "nested_items", locals: {hashes: hash[:sub_items]} ) if hash[:sub_items] %>
 <% end %>
 </ul>

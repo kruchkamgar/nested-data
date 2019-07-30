@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   end
 
 include ConstructHash
+include ConstructHashNestedEdit
   def show_items
     # performance: sort Item first, then construct multi-dimensional array from bottom up?
       # yet on updating the nested structure, must traverse multi-dimensional array, anyway.
@@ -14,6 +15,9 @@ include ConstructHash
       @items << item end
 
     @nested_hash = nested_hash(@items)
+
+    data_list = nested_data_traverse(@items)
+    byebug
 
   end
 
