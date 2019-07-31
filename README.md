@@ -1,4 +1,4 @@
-# create a n-deep data structure from simple associations; render recursively with a partial
+# create an n-deep data structure from simple associations; render recursively with a partial
 
 * System dependencies
   - csv gem
